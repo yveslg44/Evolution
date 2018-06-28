@@ -11,9 +11,13 @@ public class Jeu_Villes {
 		
 		demarrerPartie(secteurs);
 		
-		for (int i=0;i<21;i++) {
-			displayMenu(secteurs);
+		for (int i=1;i<21;i++) {
+			System.out.println("tour " + i + "/20");
+			boolean gameover = displayMenu(secteurs);
+			if (gameover == true) break;
 		}
+		System.out.println("Votre score final est représenté par votre puissance");
+		Menu.calculPuissance(secteurs);
 					
 	}
 
@@ -25,26 +29,39 @@ public class Jeu_Villes {
 		Ressource carburant = new Ressource(1, "Carburant", "Le carburant ca pollue");
 		Ressource munitions = new Ressource(2, "Munitions", "Les munitions c'est cool");
 		
-		Batiment entrepot = new Batiment(0, "Entrepot", nourriture, "contient de la nourriture", 10, 200);
-		Batiment station = new Batiment(1, "Station", carburant, "contient du carburant", 10, 100);
-		Batiment arsenal = new Batiment(2, "Arsenal", munitions, "contient des munitions", 10, 150);
+		Batiment entrepot1 = new Batiment("Entrepot", nourriture, "contient de la nourriture", 10, 200);
+		Batiment station1 = new Batiment("Station", carburant, "contient du carburant", 10, 100);
+		Batiment arsenal1 = new Batiment("Arsenal", munitions, "contient des munitions", 10, 150);
 		
-		Mechant averell = new Mechant(0,5,10);
-		Mechant william = new Mechant(1,10,20);
-		Mechant jack = new Mechant(2,15,15);
-		Mechant joe = new Mechant(3,15,25);
+		Batiment entrepot2 = new Batiment("Entrepot", nourriture, "contient de la nourriture", 15, 200);
+		Batiment station2 = new Batiment("Station", carburant, "contient du carburant", 15, 100);
+		Batiment arsenal2 = new Batiment("Arsenal", munitions, "contient des munitions", 15, 150);
 		
-		entrepot.addMechant(averell);
-		entrepot.addMechant(william);
-		entrepot.addMechant(jack);
+		Batiment entrepot3 = new Batiment("Entrepot", nourriture, "contient de la nourriture", 20, 200);
+		Batiment station3 = new Batiment("Station", carburant, "contient du carburant", 20, 100);
+		Batiment arsenal3 = new Batiment("Arsenal", munitions, "contient des munitions", 20, 150);
 		
-		station.addMechant(averell);
-		station.addMechant(william);
-		station.addMechant(joe);
+		Mechant m1 = new Mechant(5,10);
+		Mechant m2 = new Mechant(10,20);
+		Mechant m3 = new Mechant(15,15);
+		Mechant m4 = new Mechant(15,25);
+		Mechant m5 = new Mechant(20,35);
+		Mechant m6 = new Mechant(25,50);
+		Mechant m7 = new Mechant(30,55);
+		Mechant m8 = new Mechant(45,70);
+		Mechant m9 = new Mechant(80,100);
 		
-		arsenal.addMechant(jack);
-		arsenal.addMechant(william);
-		arsenal.addMechant(joe);
+		entrepot1.addMechant(m1);
+		entrepot2.addMechant(m2);
+		entrepot3.addMechant(m5);
+		
+		station1.addMechant(m3);
+		station2.addMechant(m4);
+		station3.addMechant(m6);
+		
+		arsenal1.addMechant(m7);
+		arsenal2.addMechant(m8);
+		arsenal3.addMechant(m9);
 		
 		
 		Secteur [] secteurs = new Secteur [nbSecteur]; 
@@ -66,10 +83,11 @@ public class Jeu_Villes {
 		
 		for (int j=0; j<3; j++) {
 			for (int i=0; i<3; i++) {
-				secteurs[j].getVilles()[i].construireBatiment(entrepot);
-				secteurs[j].getVilles()[i].construireBatiment(station);
-				secteurs[j].getVilles()[i].construireBatiment(arsenal);
+				secteurs[j].getVilles()[i].construireBatiment(entrepot3);
+				secteurs[j].getVilles()[i].construireBatiment(station3);
+				secteurs[j].getVilles()[i].construireBatiment(arsenal3);
 			}
+			
 		}
 				
 		return secteurs;
@@ -79,9 +97,9 @@ public class Jeu_Villes {
 		int choix = 0;
 		do {
 		System.out.println("Avec quel secteur souhaitez-vous débuter ?");
-		System.out.println("1 - Secteur Ouest");
-		System.out.println("2 - Secteur Sud");
-		System.out.println("3 - Secteur NordEst");
+		System.out.println("1 - Secteur Ouest (niveau facile)");
+		System.out.println("2 - Secteur Sud (niveau intermediaire)");
+		System.out.println("3 - Secteur NordEst (niveau difficile)");
 		Scanner input = new Scanner(System.in);
 		choix = input.nextInt();
 		} while (choix != 1 && choix !=2 && choix !=3); 
@@ -108,7 +126,8 @@ public class Jeu_Villes {
 			}
 		}	
 	}
-	public static void displayMenu(Secteur [] secteurs) {
+	public static boolean displayMenu(Secteur [] secteurs) {
+		boolean gameover;
 		int choix = 0;
 		System.out.println("Que souhaitez-vous faire ?");
 		System.out.println("1 - Afficher secteurs");
@@ -116,6 +135,7 @@ public class Jeu_Villes {
 		System.out.println("3 - Attaquer ville");
 		System.out.println("4 - Calculer puissance");
 		System.out.println("5 - Afficher batiments/méchants");
+		System.out.println("6 - Ameliorer un batiment");
 		Scanner input = new Scanner(System.in);
 		choix = input.nextInt();
 		if (choix == 1) {
@@ -126,7 +146,8 @@ public class Jeu_Villes {
 		}
 		
 		else if (choix == 3) {
-			Menu.menuAttaquerBatimentMechant(secteurs);
+			gameover = Menu.menuAttaquerBatimentMechant(secteurs);
+			return gameover;
 		}
 		else if (choix == 4) {
 			Menu.calculPuissance(secteurs);
@@ -134,6 +155,9 @@ public class Jeu_Villes {
 		else if (choix == 5) {
 			Menu.menuDisplayBatimentMechant(secteurs);
 		}
-		
+		else if (choix == 6) {
+			Menu.menuAmeliorerBatiment(secteurs);
+		}
+		return gameover = false;
 	}
 }

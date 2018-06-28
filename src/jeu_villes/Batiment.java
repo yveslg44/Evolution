@@ -1,12 +1,14 @@
 package jeu_villes;
 
 import java.util.List;
+import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Batiment {
 	
 	//attributs
+	private int compteur = 0;
 	private int id;
 	private String nom;
 	private Ressource ressource;
@@ -16,10 +18,11 @@ public class Batiment {
 	private int Vie;
 	
 	//constructeur
-	public Batiment(int id, String nom, Ressource ressource, String description, Mechant mechants, int stock,
+	public Batiment(String nom, Ressource ressource, String description, Mechant mechants, int stock,
 			int vie) {
 		super();
-		this.id = id;
+		compteur++;
+		this.id = compteur;
 		this.nom = nom;
 		this.ressource = ressource;
 		this.description = description;
@@ -29,7 +32,7 @@ public class Batiment {
 	}
 
 	//constructeur
-		public Batiment(int id, String nom, Ressource ressource, String description, int stock,
+		public Batiment(String nom, Ressource ressource, String description, int stock,
 				int vie) {
 			super();
 			this.id = id;
@@ -118,7 +121,12 @@ public class Batiment {
 		this.mechants.remove(mechant);
 	}
 	
-	public void attaquerBatiment(Batiment batiment, int puissance) {
+	public boolean attaquerBatiment(Batiment batiment, int puissance) {
+		boolean gameover = false;
+		Scanner input = new Scanner (System.in);
+		String reponse = " ";
+		int vieJoueur = puissance;
+		do {		
 		if (batiment.mechants.size() == 0) {
 			System.out.println("Le batiment est vide, il est à vous");
 		}
@@ -126,18 +134,31 @@ public class Batiment {
 			int defense = batiment.getMechant().get(0).getVie();
 			if (puissance >= defense)
 			{
-				System.out.println("Vous avez tué le méchant n° " + batiment.getMechant().get(0).getId());
+				System.out.println("Vous avez tué le méchant niveau " + batiment.getMechant().get(0).getId());
 				batiment.removeMechant(batiment.getMechant().get(0));
 				if (batiment.mechants.size() == 0) {
 					System.out.println("Le batiment est vide, il est à present à vous");
+					continue;
 				}
 			}
 			else if (puissance < defense)
 			{
-				System.out.println("Vous avez touché le méchant n° " + batiment.getMechant().get(0).getId() + ", il lui resteune vie de " + batiment.getMechant().get(0).getVie());
 				batiment.getMechant().get(0).setVie(defense - puissance);
-			}
+				System.out.println("Vous avez touché le méchant niveau " + batiment.getMechant().get(0).getId() + ", il lui reste une vie de " + batiment.getMechant().get(0).getVie());
+				System.out.println("Le méchant riposte !");
+				vieJoueur = vieJoueur - batiment.getMechant().get(0).getDegat();
+				System.out.println("Il vous a infligé des degats de " + batiment.getMechant().get(0).getDegat() + ", votre vie restante est de " + vieJoueur);
+				if (vieJoueur <= 0) {
+					System.out.println("GAME OVER !");
+					return gameover = true;
+				}
+					
+			}			
 		}
+		System.out.println("Voulez-vous continuer à attaquer ou fuir ? (a/f)");
+		reponse = input.nextLine();
+		} while (reponse.equals("a") && batiment.mechants.size() != 0 && vieJoueur >= 0);
+		return gameover = false;
 	}
 	
 	public void verifierToutBatimentVide()

@@ -3,6 +3,7 @@ package jeu_villes;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 public class Ville {
 	
@@ -91,17 +92,28 @@ public class Ville {
 				
 	}
 	
-//	public void attaquerBatiment(Batiment batiment, int puissance) {
-//		int defense = batiment.getMechant().get(0).getVie();
-//		if (puissance >= defense)
-//		{
-//			batiment.removeMechant(batiment.getMechant().get(0));
-//			System.out.println("Vous avez tué le méchant n° " + batiment.getMechant().get(0).getId());
-//		}
-//		else if (puissance < defense)
-//		{
-//			batiment.getMechant().get(0).setVie(defense - puissance);
-//			System.out.println("Vous avez touché le méchant n° " + batiment.getMechant().get(0).getId() + ", il lui resteune vie de " + batiment.getMechant().get(0).getVie());
-//		}
-//	}
+
+	public void verifierVilleGagnee(Ville ville) {
+		if (ville.getBatiments().get(0).getMechant().size() == 0 
+			&& ville.getBatiments().get(1).getMechant().size() == 0
+			&& ville.getBatiments().get(2).getMechant().size() == 0) 
+		{
+			System.out.println("Tous les batiments de la ville sont libérés !");
+			System.out.println("Vous avez conquis " + ville.getNom() + " !!!");
+			ville.setEtat("Gagnée");
+		}
+	}
+	
+	public void ameliorerBatiment(Ville ville, int choixBat) {
+		if (!ville.getEtat().equals("Gagnée")) {
+			System.out.println("Cette ville n'a pas été conquise !");
+		}
+		else {
+			Random r = new Random();
+			int valeur = 2 + r.nextInt(10 - 2);
+			ville.getBatiments().get(choixBat).setStock(ville.getBatiments().get(choixBat).getStock() + valeur);
+			System.out.println("Vous avez augmenté la capacité de ce batiment de " + valeur);
+			System.out.println("Le stock est à présent de " + ville.getBatiments().get(choixBat).getStock());
+		}
+	}
 }
