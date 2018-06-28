@@ -134,12 +134,7 @@ public class Jeu_Villes {
 		System.out.println("2 - Afficher ville");
 		System.out.println("3 - Attaquer ville");
 		System.out.println("4 - Calculer puissance");
-<<<<<<< HEAD
-		System.out.println("5 - Afficher batiments/m�chants");
-		System.out.println("6 - Ameliorer un batiment");
-=======
 		System.out.println("5 - Afficher batiments/méchants");
->>>>>>> refs/remotes/github_url/master
 		Scanner input = new Scanner(System.in);
 		choix = input.nextInt();
 		if (choix == 1) {
