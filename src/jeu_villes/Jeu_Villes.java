@@ -1,7 +1,7 @@
 package jeu_villes;
 
 import java.util.Scanner;
-
+//Test pour Travis.
 public class Jeu_Villes {
 
 	public static void main(String[] args) {
@@ -78,7 +78,7 @@ public class Jeu_Villes {
 	public static void demarrerPartie(Secteur [] secteurs) {
 		int choix = 0;
 		do {
-		System.out.println("Avec quel secteur souhaitez-vous débuter ?");
+		System.out.println("Avec quel secteur souhaitez-vous dÃ©buter ?");
 		System.out.println("1 - Secteur Ouest");
 		System.out.println("2 - Secteur Sud");
 		System.out.println("3 - Secteur NordEst");
@@ -88,7 +88,7 @@ public class Jeu_Villes {
 		if (choix == 1) {
 			System.out.println("vous avez choisi le secteur Ouest");
 			for (int i=0; i<3; i++) {
-				secteurs[0].getVilles()[i].setEtat("Gagnée");
+				secteurs[0].getVilles()[i].setEtat("GagnÃ©e");
 				
 			}
 		}
@@ -96,14 +96,14 @@ public class Jeu_Villes {
 		if (choix == 2) {
 			System.out.println("vous avez choisi le secteur Sud");
 			for (int i=0; i<3; i++) {
-				secteurs[1].getVilles()[i].setEtat("Gagnée");
+				secteurs[1].getVilles()[i].setEtat("GagnÃ©e");
 				
 			}
 		}
 		if (choix == 3) {
 			System.out.println("vous avez choisi le secteur NordEst");
 			for (int i=0; i<3; i++) {
-				secteurs[2].getVilles()[i].setEtat("Gagnée");
+				secteurs[2].getVilles()[i].setEtat("GagnÃ©e");
 				
 			}
 		}	
@@ -115,7 +115,7 @@ public class Jeu_Villes {
 		System.out.println("2 - Afficher ville");
 		System.out.println("3 - Attaquer ville");
 		System.out.println("4 - Calculer puissance");
-		System.out.println("5 - Afficher batiments/méchants");
+		System.out.println("5 - Afficher batiments/mÃ©chants");
 		Scanner input = new Scanner(System.in);
 		choix = input.nextInt();
 		if (choix == 1) {
